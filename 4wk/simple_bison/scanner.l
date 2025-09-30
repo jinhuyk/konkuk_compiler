@@ -18,7 +18,7 @@
 "="                    { return '='; }
 "("                    { return '('; }
 ")"                    { return ')'; }
-"+"|"-"|"*"|"/"        { return yytext[0]; }
+"+"|"-"|"*"|"/"|"%"       { return yytext[0]; }
 
 .                      { /* 알 수 없는 문자 */
                          fprintf(stderr, "unknown char: '%s'\n", yytext);

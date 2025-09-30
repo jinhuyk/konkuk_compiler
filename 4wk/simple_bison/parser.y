@@ -74,7 +74,14 @@ term
           if ($3 == 0) { fprintf(stderr, "division by zero\n"); $$ = 0.0; }
           else $$ = $1 / $3;
       }
-    | factor
+    | term '%' factor {
+        if ((int)$1 == $1 && (int)$3==$3 ){
+            $$ = (int)$1 % (int)$3;
+        }
+        else {fprintf(stderr, "value is not integer\n"); $$ = 0; }
+
+    }
+    | factor 
     ;
 
 factor
