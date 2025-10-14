@@ -3,7 +3,7 @@ LEX = flex
 YACC = bison
 CFLAGS = -Wall -Wextra -O2
 
-GENS = lex.yy.c parser.tab.c parser.tab.h
+GENS = lex.yy.c parser.tab.c 
 SRCS = ast.c main.c
 OBJS = $(GENS) $(SRCS)
 TARGET = calc_ast
