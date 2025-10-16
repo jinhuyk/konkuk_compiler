@@ -508,8 +508,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    31,    31,    32,    36,    37,    42,    43,    44,    48,
-      49,    50,    54,    55,    56,    57
+       0,    31,    31,    32,    36,    43,    48,    49,    50,    54,
+      55,    56,    60,    61,    62,    63
 };
 #endif
 
@@ -1080,66 +1080,72 @@ yyreduce:
     {
   case 4: /* line: expr ';'  */
 #line 36 "parser.y"
-                  { root = (yyvsp[-1].node); print_ast(root, 0); free_ast(root); }
-#line 1085 "parser.tab.c"
-    break;
-
-  case 5: /* line: error ';'  */
-#line 37 "parser.y"
-                  { yyerrok; }
+                  { root = (yyvsp[-1].node); print_ast(root, 0); 
+                    int err = 0;
+                    double v= eval(root, &err);
+                    if (!err){
+                      printf("= %.10g\n",v);
+                    }
+  free_ast(root); }
 #line 1091 "parser.tab.c"
     break;
 
-  case 6: /* expr: expr '+' term  */
-#line 42 "parser.y"
-                   { (yyval.node) = new_op(NODE_ADD, (yyvsp[-2].node), (yyvsp[0].node)); }
+  case 5: /* line: error ';'  */
+#line 43 "parser.y"
+                  { yyerrok; }
 #line 1097 "parser.tab.c"
     break;
 
-  case 7: /* expr: expr '-' term  */
-#line 43 "parser.y"
-                   { (yyval.node) = new_op(NODE_SUB, (yyvsp[-2].node), (yyvsp[0].node)); }
+  case 6: /* expr: expr '+' term  */
+#line 48 "parser.y"
+                   { (yyval.node) = new_op(NODE_ADD, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1103 "parser.tab.c"
     break;
 
-  case 9: /* term: term '*' factor  */
-#line 48 "parser.y"
-                    { (yyval.node) = new_op(NODE_MUL, (yyvsp[-2].node), (yyvsp[0].node)); }
+  case 7: /* expr: expr '-' term  */
+#line 49 "parser.y"
+                   { (yyval.node) = new_op(NODE_SUB, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1109 "parser.tab.c"
     break;
 
-  case 10: /* term: term '/' factor  */
-#line 49 "parser.y"
-                    { (yyval.node) = new_op(NODE_DIV, (yyvsp[-2].node), (yyvsp[0].node)); }
+  case 9: /* term: term '*' factor  */
+#line 54 "parser.y"
+                    { (yyval.node) = new_op(NODE_MUL, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1115 "parser.tab.c"
     break;
 
-  case 12: /* factor: NUMBER  */
-#line 54 "parser.y"
-                                   { (yyval.node) = new_num((yyvsp[0].num)); }
+  case 10: /* term: term '/' factor  */
+#line 55 "parser.y"
+                    { (yyval.node) = new_op(NODE_DIV, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1121 "parser.tab.c"
     break;
 
-  case 13: /* factor: '(' expr ')'  */
-#line 55 "parser.y"
-                                   { (yyval.node) = (yyvsp[-1].node); }
+  case 12: /* factor: NUMBER  */
+#line 60 "parser.y"
+                                   { (yyval.node) = new_num((yyvsp[0].num)); }
 #line 1127 "parser.tab.c"
     break;
 
-  case 14: /* factor: '-' factor  */
-#line 56 "parser.y"
-                                   { (yyval.node) = new_op(NODE_SUB, new_num(0), (yyvsp[0].node)); }
+  case 13: /* factor: '(' expr ')'  */
+#line 61 "parser.y"
+                                   { (yyval.node) = (yyvsp[-1].node); }
 #line 1133 "parser.tab.c"
     break;
 
-  case 15: /* factor: '+' factor  */
-#line 57 "parser.y"
-                                   { (yyval.node) = (yyvsp[0].node); }
+  case 14: /* factor: '-' factor  */
+#line 62 "parser.y"
+                                   { (yyval.node) = new_op(NODE_SUB, new_num(0), (yyvsp[0].node)); }
 #line 1139 "parser.tab.c"
     break;
 
+  case 15: /* factor: '+' factor  */
+#line 63 "parser.y"
+                                   { (yyval.node) = (yyvsp[0].node); }
+#line 1145 "parser.tab.c"
+    break;
 
-#line 1143 "parser.tab.c"
+
+#line 1149 "parser.tab.c"
 
       default: break;
     }
@@ -1332,9 +1338,11 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 60 "parser.y"
+#line 66 "parser.y"
 
 
 void yyerror(const char *s) {
     fprintf(stderr, "Parse error: %s\n", s);
 }
+
+

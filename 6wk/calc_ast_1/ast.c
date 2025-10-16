@@ -40,3 +40,74 @@ void free_ast(AST *node) {
     free_ast(node->right);
     free(node);
 }
+
+
+double eval_ast(AST *node, int *err){
+    if (!node) {if (err) *err = 1; return 0.0;}
+
+    switch(node ->type){
+        case NODE_NUM:
+            return node -> value;
+
+        case NODE_ADD: {
+            double l = eval_ast(node->left, err);
+            if(err && *err) return 0.0;
+            double r = eval_ast(node->right, err);
+            if(err && *err) return 0.0;
+            return l+r;
+        }
+        case NODE_SUB: {
+            double l = eval_ast(node->left, err);
+            if(err && *err) return 0.0;
+            double r = eval_ast(node->right, err);
+            if(err && *err) return 0.0;
+            return l-r;
+        }
+        case NODE_MUL: {
+            double l = eval_ast(node->left, err);
+            if(err && *err) return 0.0;
+            double r = eval_ast(node->right, err);
+            if(err && *err) return 0.0;
+            return l * r;
+        }
+        case NODE_DIV: {
+            double l = eval_ast(node->left, err);
+            if(err && *err) return 0.0;
+            double r = eval_ast(node->right, err);
+            if(err && *err) return 0.0;
+            if (r == 0.0){
+                fprintf(stderr,"[sem] 0으로 나눌 수 없습니다\n");
+                if (err) *err = 1;
+                return 0.0;
+            }
+            return l/r;
+        }  
+    }
+    if (err) *err = 1;
+    return 0.0;
+}
+
+int check(AST *node){
+    if (!node) return 0;
+    if(check(node->left)) return 1;
+    if(check(node->right)) return 1;
+    if (node->type == NODE_DIV) {
+        int err = 0;
+        double r = eval_ast(node->right, &err);
+        if(!err && r ==0.0){
+            fprintf(stderr, "[sem] 0으로 나눌 수 없습니다 (사전점검\n)");
+            return 1;
+        }
+    }
+    return 0;
+}
+
+double eval(AST *node, int *err){
+    if (check(node)){
+        if (err) *err = 1;
+        return 0.0;
+
+    }
+    if (err) *err = 0;
+    return eval_ast(node, err);
+}

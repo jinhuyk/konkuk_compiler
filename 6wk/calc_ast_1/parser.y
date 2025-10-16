@@ -33,7 +33,13 @@ input
   ;
 
 line
-  : expr ';'      { root = $1; print_ast(root, 0); free_ast(root); }
+  : expr ';'      { root = $1; print_ast(root, 0); 
+                    int err = 0;
+                    double v= eval(root, &err);
+                    if (!err){
+                      printf("= %.10g\n",v);
+                    }
+  free_ast(root); }
   | error ';'     { yyerrok; }          /* 에러 복구: 해당 줄만 건너뜀 */
   ;
 
@@ -62,3 +68,5 @@ factor
 void yyerror(const char *s) {
     fprintf(stderr, "Parse error: %s\n", s);
 }
+
+
