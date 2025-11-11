@@ -73,13 +73,14 @@ extern int yydebug;
     ELSE = 268,                    /* ELSE  */
     WHILE = 269,                   /* WHILE  */
     RETURN = 270,                  /* RETURN  */
-    EQ = 271,                      /* EQ  */
-    NE = 272,                      /* NE  */
-    LE = 273,                      /* LE  */
-    GE = 274,                      /* GE  */
-    AND = 275,                     /* AND  */
-    OR = 276,                      /* OR  */
-    LOWER_THAN_ELSE = 277          /* LOWER_THAN_ELSE  */
+    FOR = 271,                     /* FOR  */
+    EQ = 272,                      /* EQ  */
+    NE = 273,                      /* NE  */
+    LE = 274,                      /* LE  */
+    GE = 275,                      /* GE  */
+    AND = 276,                     /* AND  */
+    OR = 277,                      /* OR  */
+    LOWER_THAN_ELSE = 278          /* LOWER_THAN_ELSE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

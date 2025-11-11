@@ -33,7 +33,7 @@
 "else"                            { return ELSE; }
 "while"                           { return WHILE; }
 "return"                          { return RETURN; }
-
+"for"                             { return FOR; }
 "=="                              { return EQ; }
 "!="                              { return NE; }
 "<="                              { return LE; }
@@ -57,7 +57,7 @@
 "{"                               { return '{'; }
 "}"                               { return '}'; }
 
-[A-Za-z_][A-Za-z0-9_]*            { yylval = node(NK_VAR,    yylineno, yytext, 0); return IDENT; }
+[A-Za-z_][A-Za-z0-9_]*            { yylval = node(NK_VAR,    yylineno, yytext, 0); return IDENT; } 
 
 [0-9]+                            { yylval = node(NK_INT,    yylineno, yytext, 0); return INT_CONST; }
 

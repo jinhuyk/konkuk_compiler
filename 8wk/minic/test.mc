@@ -1,13 +1,10 @@
-int sum(int a, int b) {
-  int s = a + b;
-  return s;
-}
-
 int main() {
-  int x = 10, y = 20;
-  while (x < y) {
-    x = x + 1;
+  int i = 0, sum = 0;
+  for (int k = 0; k<3; k = k+1) 
+    sum = sum+k;
+  for (i = 0; i<5; i=i+1){
+    sum= sum+i;
   }
-  if (x == y) return sum(x, y);
-  return 0;
+  for(;;) break;
+  return sum;
 }

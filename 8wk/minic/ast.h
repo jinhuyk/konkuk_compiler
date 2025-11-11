@@ -27,6 +27,7 @@ typedef enum {
   NK_RETURN,             // return 문 (예: return expr;)
   NK_EXPR_STMT,          // 단독 표현식 문장 (예: a = b + c;)
   NK_ASSIGN,             // 대입식 (예: a = b;)
+  NK_FOR,
   NK_BINOP,              // 이항 연산 (예: a + b, x < y, etc.)
   NK_UNOP,               // 단항 연산 (예: -x, !flag)
   NK_CALL,               // 함수 호출 (예: sum(a, b))
